@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="uz-Cyrl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>30 хил дуо — Борлиқ билан идеал ҳаёт</title>
+<style>
+  :root{
+    --night:#120D1B;
+    --plum:#1C142B;
+    --surface:#261B3A;
+    --gold:#D9B873;
+    --gold-soft:#F0DAA6;
+    --text:#F3ECFA;
+    --muted:#B0A1C4;
+    --line:rgba(217,184,115,.24);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:Georgia,"Times New Roman",serif;
+    background:radial-gradient(circle at 50% 0%,#281B3E 0%,var(--night) 65%);
+    color:var(--text);
+    line-height:1.65;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  #angels-layer{
+    position:fixed;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+    overflow:hidden;
+  }
+  .tiny-angel{
+    position:absolute;
+    bottom:-60px;
+    opacity:0;
+    filter:drop-shadow(0 0 8px rgba(240,218,166,.55));
+    animation:flyUp var(--dur,18s) linear var(--delay,0s) infinite;
+  }
+  @keyframes flyUp{
+    0%{transform:translateX(0) translateY(0) scale(var(--sc,1));opacity:0}
+    12%{opacity:.82}
+    50%{transform:translateX(var(--drift,24px)) translateY(-55vh) scale(var(--sc,1));opacity:.82}
+    88%{opacity:.82}
+    100%{transform:translateX(calc(var(--drift,24px) * -0.5)) translateY(-112vh) scale(var(--sc,1));opacity:0}
+  }
+
+  /* Qanot qoqish animatsiyasi */
+  .angel-wrap{
+    position:relative;
+    width:100%;
+    height:100%;
+  }
+  .wing-l, .wing-r{
+    position:absolute;
+    top:34%;
+    width:38%;
+    height:34%;
+    background:radial-gradient(ellipse at center, rgba(255,247,224,.95), rgba(240,218,166,.55));
+    border-radius:100% 20% 100% 20%;
+  }
+  .wing-l{
+    left:12%;
+    transform-origin:right center;
+    animation:flapL .55s ease-in-out infinite;
+  }
+  .wing-r{
+    right:12%;
+    border-radius:20% 100% 20% 100%;
+    transform-origin:left center;
+    animation:flapR .55s ease-in-out infinite;
+  }
+  .angel-body{
+    position:absolute;
+    left:50%;
+    top:22%;
+    width:26%;
+    height:58%;
+    transform:translateX(-50%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .halo{
+    width:62%;
+    height:16%;
+    border:1.6px solid #F0DAA6;
+    border-radius:50%;
+    margin-bottom:2px;
+  }
+  .head{
+    width:38%;
+    aspect-ratio:1;
+    border-radius:50%;
+    background:#FFF7E0;
+  }
+  .robe{
+    width:64%;
+    flex:1;
+    margin-top:2px;
+    background:linear-gradient(180deg,#FFF7E0,#D9B873);
+    clip-path:polygon(22% 0%, 78% 0%, 100% 100%, 0% 100%);
+  }
+
+  @keyframes flapL{
+    0%, 100%{ transform:rotate(8deg) scaleX(1); }
+    50%{ transform:rotate(-24deg) scaleX(0.45); }
+  }
+  @keyframes flapR{
+    0%, 100%{ transform:rotate(-8deg) scaleX(1); }
+    50%{ transform:rotate(24deg) scaleX(0.45); }
+  }
+
+  .wrap{
+    position:relative;
+    z-index:2;
+    max-width:760px;
+    margin:0 auto;
+    padding:48px 18px 80px;
+  }
+  header{
+    text-align:center;
+    padding:24px 16px 36px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:28px;
+  }
+  .eyebrow{
+    font-family:system-ui,-apple-system,sans-serif;
+    font-size:12px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:12px;
+  }
+  h1{
+    font-size:clamp(30px,6vw,52px);
+    color:var(--gold-soft);
+    margin-bottom:14px;
+    font-weight:600;
+  }
+  .hero-quote{
+    font-style:italic;
+    font-size:19px;
+    color:var(--text);
+    max-width:580px;
+    margin:0 auto 14px;
+  }
+  .pill{
+    display:inline-block;
+    font-family:system-ui,-apple-system,sans-serif;
+    font-size:13px;
+    color:var(--gold-soft);
+    background:rgba(217,184,115,.1);
+    border:1px solid var(--line);
+    padding:7px 16px;
+    border-radius:999px;
+  }
+  .search-wrap{
+    margin-bottom:26px;
+  }
+  .search-wrap input{
+    width:100%;
+    padding:12px 16px;
+    border-radius:12px;
+    border:1px solid var(--line);
+    background:var(--plum);
+    color:var(--text);
+    font-family:system-ui,-apple-system,sans-serif;
+    font-size:15px;
+    outline:none;
+  }
+  .search-wrap input:focus{border-color:var(--gold)}
+  .card{
+    background:linear-gradient(180deg,var(--surface),var(--plum));
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:20px 22px 16px;
+    margin-bottom:16px;
+  }
+  .card.hide{display:none}
+  .head-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:10px;
+  }
+  .badge{
+    min-width:34px;
+    height:34px;
+    padding:0 8px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#f0daa6,#b98d36);
+    color:#191026;
+    font-family:system-ui,-apple-system,sans-serif;
+    font-weight:700;
+    font-size:14px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    flex:none;
+  }
+  h2{
+    font-size:23px;
+    color:var(--gold-soft);
+    font-weight:600;
+  }
+  .prayer{
+    font-size:18px;
+    color:var(--text);
+    border-left:2px solid var(--gold);
+    padding-left:14px;
+    margin:10px 0;
+  }
+  .note{
+    font-style:italic;
+    font-size:15px;
+    color:var(--muted);
+    margin-top:8px;
+  }
+  .emblem-footer{
+    margin-top:16px;
+    padding-top:11px;
+    border-top:1px dashed rgba(217,184,115,.18);
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+  }
+  .logo-frame{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:58px;
+    height:58px;
+    border-radius:14px;
+    background:#f3ece1;
+    border:1px solid rgba(217,184,115,.55);
+    box-shadow:0 4px 14px rgba(0,0,0,.35),0 0 12px rgba(217,184,115,.15);
+    overflow:hidden;
+  }
+  .logo-frame img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  footer{
+    text-align:center;
+    margin-top:42px;
+    padding-top:26px;
+    border-top:1px solid var(--line);
+    color:var(--gold-soft);
+    font-style:italic;
+    font-size:20px;
+  }
+  footer span{
+    display:block;
+    font-style:normal;
+    font-family:system-ui,-apple-system,sans-serif;
+    font-size:12px;
+    letter-spacing:2px;
+    color:var(--muted);
+    margin-top:6px;
+  }
+</style>
+</head>
+<body>
+
+<div id="angels-layer"></div>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow"> nomini yozamiz</div>
+    <h1>30 хил дуо</h1>
+    <p class="hero-quote">“Мен Аллоҳимнинг суюкли бандасиман, Аллоҳимнинг эркатойиман. Менда Унинг табиати, Унинг ҳаёти, Унинг нури бор.”</p>
+    <div class="pill">«Мен илоҳий табиатимни англайман» ҳолатида ишлайди</div>
+  </header>
+
+  <div class="search-wrap">
+    <input type="search" id="q" placeholder="Дуо номи, рақами ёки сўз бўйича қидириш...">
+  </div>
+
+  <div id="cards">
+    <article class="card"><div class="head-row"><span class="badge">✦</span><h2>Аллоҳимнинг суюкли бандаси ҳолати</h2></div><p class="prayer">Мен Аллоҳимнинг суюкли бандасиман, Аллоҳимнинг эркатойиман. Менда Унинг табиати, Унинг ҳаёти, Унинг нури бор. Аллоҳим нимани қила олса, мен ҳам шуни қила оламан!</p><p class="note">Бу дуолар «Мен илоҳий табиатимни англайман» ҳолатида ишлайди.</p></article>
+    <article class="card"><div class="head-row"><span class="badge">1</span><h2>Баракот дуоси</h2></div><p class="prayer">Аллоҳим, мен шаҳримга, Устозимга, болаларимга, оилам ва наслимга барака тилайман. Сенинг Кучингни, Донолигингни, Ҳимоянгни, Ҳузурингни, Нурингни ва Фаришталарингни Устозимга, оиламга ва наслимга чорлайман.</p><p class="note">Нимага барака тиласак, ўша ерга Аллоҳимнинг Қўли, Кучи ва Ҳузурини чорлаймиз.</p></article>
+    <article class="card"><div class="head-row"><span class="badge">2</span><h2>Башорат эълони дуоси</h2></div><p class="prayer">Роббим, Сен ваъда қилганингнинг ҳаммасини ҳаётимда амалга оширишингни биламан. Соғ бўлишимга, тўкин-сочинликда ва фаровонликда яшашимга ишонаман. Болаларим илоҳий ҳимояда, оилам ва уйим баракали. Шифо, поклаш, мўъжиза ва зийраклик инъомлари ҳаётимда бўлади. Буни дадил эълон қиламан!</p><p class="note">Қийин пайтда, кайфият тушганда, иш чаппасидан кетганда.</p></article>
+    <article class="card"><div class="head-row"><span class="badge">3</span><h2>Буйруқ дуоси</h2></div><p class="prayer">Аллоҳимнинг суюкли бандаси ҳолатидан: ҳозироқ Аллоҳимнинг ҳокимияти билан (темиратки)ларга қурисин, йўқолсин, нари кет, деб буюраман! Пулга, фаровонликка, тўкин-сочинликка ҳаётимга кел, деб буюраман.</p><p class="note">Шубҳа қилма! Касаллик, қўрқув, тушкунликка кет де; аъзоларга — меъёрида ишла, тузал де.</p></article>
+    <article class="card"><div class="head-row"><span class="badge">4</span><h2>Руҳий жанг дуоси</h2></div><p class="prayer">Ҳозироқ Аллоҳимнинг ҳокимияти билан буюраман: нари кет! Эй зулмат руҳлари, Аллоҳимнинг номи билан йўлимдан, уйимдан, оиламдан ва хизмат қилаётганларнинг танидан кетинглар, йўқолинглар! Бош фаришта Микоил, тозаловчи ва ҳимоя фариштаси, зулмат кучларини ҳайда, ҳимоянгни ўрнат! Ҳайдалинглар, йўқолинглар!</p><p class="note">Қоронғу кучлар босганда ва ҳужум қилганда.</p></article>
+    <article class="card"><div class="head-row"><span class="badge">5</span><h2>Шафоат дуоси</h2></div><p class="prayer">Роббим, шаҳримга, юртимга, раҳбаримга, оиламга барака бер, ҳимоянгни ўрнат. Аллоҳим, уларга ўзингни кўрсат, Сен билан қанчалик яхши эканини ҳис қилишсин. Бу амалдорни Ўз қўлингга топшираман: Ўзинг ҳукм қил. Илоҳий адолатинг ва севгинг ҳаётимизда ҳукм сурсин.</p><p class="note">Ҳали Аллоҳимни танимаганлар учун, зулм қилувчиларни Аллоҳимга топшириш учун.</p></article>
+    <article class="card"><div class="head-row"><span class="badge">6</span><h2>Муножот дуоси</h2></div><p class="prayer">Аллоҳим, ўзимда ҳали қанча нуқсон борлигини кўриб, ожизлигимни ҳис қилиб йиғлайман. Юрагимни Сенинг олдингга қўйиб, хатоларимни тан оламан. Камчиликларимга қарамай, Сен мени севасан ва қайғурасан. Раҳматинг қанчалик буюк!</p><p class="note">Қалб қаттиқ поклана боради, Аллоҳим олдида ўзни хорлик келади.</p></article>
+    <article class="card"><div class="head-row"><span class="badge">7</span><h2>Ички дуо</h2></div><p class="prayer">Роббим, юрагимни пок қил, Сенга эргашай. Мендан кўпроқ ол, менга Ўзингдан кўпроқ бер: Куч, Нур, ҳақиқат, инъом ва мўъжизаларингни. Заифлигимни, ташвишимни, камбағаллигимни, ғуруримни олиб қўй. Фаришталар билан ҳамкорликни, ҳақиқат йўлини, донолик ва жасурликни ўргат.</p><p class="note">Кўчада юриб, ичингда дуо қил. «Ё Роббим, мен Сени севаман!»</p></article>
+    <article class="card"><div class="head-row"><span class="badge">8</span><h2>Фаришталар тилидаги дуо</h2></div><p class="prayer">Олий «Мен»имиз ақлни четлаб, нутқ аъзоларига тўғридан-тўғри йўл топади. Руҳимиз Аллоҳимга айни дамда зарур нарсани айтади. Душманларнинг барча режалари барбод бўлади. Бу тилдан жинлар қўрқади.</p><p class="note">Безовталик ва ташвишда. Устоз томонидан қўл қўйиш орқали берилади.</p></article>
+    <article class="card"><div class="head-row"><span class="badge">9</span><h2>Шукр ва сажда дуоси</h2></div><p class="prayer">Аллоҳим, буюк Яратгувчи, Сенга шукр қиламан, Сени жуда севаман. Сен мени топдинг, бу Мактабга олиб келдинг, ажойиб оила ва дўстлар бердинг. Сени қадрлайман, Сени улуғлайман. Ҳамиша мен билан эканинг учун шукр. Нурингдан, севгингдан баҳра олай, Сенга сажда қиламан.</p><p class="note">Аллоҳим билан алоқани жуда мустаҳкамлайди. Хоҳлаган пайтда дуо қил!</p></article>
+    <article class="card"><div class="head-row"><span class="badge">10</span><h2>Бошқа инсон қалби билан суҳбат дуоси</h2></div><p class="prayer">Биз билан кечаётган тажриба учун раҳмат. Сени севаман, ҳурмат қиламан. Сенда ҳамма нарса яхши бўлишини истайман. Сенга барака тилайман. Устунликларингни тан оламан ва сен билан низолашмайман.</p><p class="note">Кечирим сўрасанг ҳам кечирмаса — рўпарангга ўтқазиб, қалбидан кечирим сўра (аввал ўзидан!).</p></article>
+    <article class="card"><div class="head-row"><span class="badge">11</span><h2>Имон дуоси</h2></div><p class="prayer">Аллоҳим мени севади, ҳаётим Унинг қўлида. Менда ҳамиша ҳамма нарса яхши бўлади. Болаларим Сенинг ҳимоянгда, улар билан доим яхши бўлади. Мен ҳеч қуримайдиган манбага уланганман. Тўкин ҳаёт кечириш — менинг тақдирим ва ҳуқуқим.</p><p class="note">Қўрқув ва ташвиш фикрларини имон сўзларига алмаштирамиз.</p></article>
+     </div>
+
+  
+</div>
+
+<script>
+try {
+  const q = document.getElementById("q");
+  const cards = Array.from(document.querySelectorAll("#cards .card"));
+
+  cards.forEach(c => {
+    const f = document.createElement("div");
+    f.className = "emblem-footer";
+    f.innerHTML = `<div class="logo-frame"><img src="logo.jpg" alt="MN emblema"></div>`;
+    c.appendChild(f);
+  });
+
+  q.addEventListener("input", () => {
+    const val = q.value.trim().toLowerCase();
+    cards.forEach(c => {
+      c.classList.toggle("hide", val && !c.textContent.toLowerCase().includes(val));
+    });
+  });
+
+  const layer = document.getElementById("angels-layer");
+  for (let i = 0; i < 12; i++) {
+    const d = document.createElement("div");
+    d.className = "tiny-angel";
+    const sz = 30 + (i % 4) * 6;
+    d.style.left = ((i * 8.3) % 92) + "%";
+    d.style.width = sz + "px";
+    d.style.height = sz + "px";
+    d.style.setProperty("--dur", (15 + (i % 6) * 2.5) + "s");
+    d.style.setProperty("--delay", -(i * 1.7) + "s");
+    d.style.setProperty("--drift", ((i % 2 === 0 ? 1 : -1) * (16 + (i % 4) * 6)) + "px");
+    d.style.setProperty("--sc", (0.9 + (i % 3) * 0.15).toFixed(2));
+    d.innerHTML = `<div class="angel-wrap">
+      <div class="wing-l"></div>
+      <div class="wing-r"></div>
+      <div class="angel-body">
+        <div class="halo"></div>
+        <div class="head"></div>
+        <div class="robe"></div>
+      </div>
+    </div>`;
+    layer.appendChild(d);
+  }
+} catch (e) {}
+</script>
+</body>
+</html>
